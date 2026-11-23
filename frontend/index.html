@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniFind DPU - ของหายในมอ ปัดหาได้เลย</title>
+  <meta name="description" content="ศูนย์แจ้งของหายและจับคู่สิ่งของ มหาวิทยาลัยธุรกิจบัณฑิตย์">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <h1><span class="line">ของหายในมอ</span><span class="line">ปัดหาได้เลย</span></h1>
+        <p class="lead">แจ้งของหายครั้งเดียว ระบบจะคัดของที่มีคนเก็บได้ใน DPU มาให้ปัดดู
+          ใช่ก็ปัดขวา ตอบคำถามลับให้ถูก แล้วค่อยเห็นรูปชัด ๆ กับช่องทางติดต่อคนเก็บได้</p>
+        <div class="hero-cta">
+          <a class="btn btn-lg btn-grape" href="/report-lost.html">ของฉันหาย</a>
+          <a class="btn btn-lg btn-butter" href="/report-found.html">ฉันเก็บของได้</a>
+        </div>
+        <p class="live-line" id="live-line"><span class="live-dot" aria-hidden="true"></span><span id="live-text">กำลังโหลด...</span></p>
+      </div>
+
+      <div class="demo-deck" aria-hidden="true">
+        <article class="swipe-card">
+          <div class="media"><div class="thumb cat-personal"><svg class="ph"><use href="/assets/icons.svg#bag"></use></svg></div>
+            <div class="score-sticker">61%<small>ตรงกัน</small></div></div>
+          <div class="info"><h3>ร่มพับสีม่วง</h3></div>
+        </article>
+        <article class="swipe-card">
+          <div class="media"><div class="thumb cat-it"><svg class="ph"><use href="/assets/icons.svg#laptop"></use></svg></div>
+            <div class="score-sticker">94%<small>ตรงกัน</small></div></div>
+          <div class="info"><h3>หูฟังไร้สายสีขาว</h3></div>
+        </article>
+        <article class="swipe-card">
+          <div class="media"><div class="thumb cat-wallet"><svg class="ph"><use href="/assets/icons.svg#wallet"></use></svg>
+            <span class="lock-badge"><svg class="i"><use href="/assets/icons.svg#lock"></use></svg> รูปจริงเบลอไว้ก่อน</span></div>
+            <div class="score-sticker">97%<small>ตรงกัน</small></div>
+            <span class="stamp yes">ใช่ของฉัน</span></div>
+          <div class="info">
+            <h3>กระเป๋าสตางค์หนังสีน้ำตาล</h3>
+            <div class="meta"><span><svg class="i"><use href="/assets/icons.svg#pin"></use></svg> สำนักหอสมุด ชั้น 3</span>
+              <span><svg class="i"><use href="/assets/icons.svg#clock"></use></svg> เจอหลังเธอทำหาย 1 ชม.</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <div><h2>ของที่มีคนเก็บได้</h2><p class="muted small" id="result-info" aria-live="polite"></p></div>
+      <a class="btn btn-sm" href="/match.html"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#cards"></use></svg>ไปปัดดูแบบการ์ด</a>
+    </div>
+
+    <form id="search-form" role="search">
+      <div class="searchbar">
+        <svg class="i" aria-hidden="true"><use href="/assets/icons.svg#search"></use></svg>
+        <label class="sr-only" for="f-q">ค้นหา</label>
+        <input type="search" id="f-q" name="q" placeholder="กระเป๋าตัง หูฟัง กุญแจ..." maxlength="60">
+        <button class="btn btn-ink btn-sm" type="submit">ค้นหา</button>
+      </div>
+      <div class="chips mt" id="quick-cats" role="group" aria-label="หมวดหมู่"></div>
+      <input type="hidden" id="f-category" name="category">
+      <details class="filter-more">
+        <summary><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#list"></use></svg>ตัวกรองเพิ่ม</summary>
+        <div class="filter-grid">
+          <div class="field"><label for="f-location">สถานที่</label><select id="f-location" name="location"></select></div>
+          <div class="field"><label for="f-status">สถานะ</label>
+            <select id="f-status" name="status">
+              <option value="">ทุกสถานะ</option>
+              <option value="available">รอเจ้าของ</option>
+              <option value="pending_claim">มีคนขอรับแล้ว</option>
+              <option value="returned">คืนแล้ว</option>
+            </select></div>
+          <div class="field"><label for="f-from">ตั้งแต่วันที่</label><input type="date" id="f-from" name="dateFrom"></div>
+          <div class="field"><label for="f-to">ถึงวันที่</label><input type="date" id="f-to" name="dateTo"></div>
+        </div>
+      </details>
+    </form>
+
+    <section class="grid grid-tiles mt" id="results"><div class="spinner"></div></section>
+    <nav class="pagination" id="pagination" aria-label="เปลี่ยนหน้า"></nav>
+
+    <div class="section-head"><h2>ใช้ยังไง</h2></div>
+    <section class="steps">
+      <div class="step"><h3>แจ้งของหาย</h3><p class="muted">บอกว่าหายอะไร ที่ไหนใน DPU ประมาณกี่โมง ไม่ต้องเป๊ะก็ได้</p></div>
+      <div class="step"><h3>ปัดดูของที่ใกล้เคียง</h3><p class="muted">ระบบให้คะแนนจากหมวด คำค้น สถานที่ และเวลา แล้วเรียงใบที่น่าจะใช่ไว้ก่อน</p></div>
+      <div class="step"><h3>ตอบคำถามลับ แล้วนัดรับ</h3><p class="muted">ตอบสิ่งที่เจ้าของตัวจริงรู้ เช่น ในกระเป๋ามีบัตรอะไร ผ่านแล้วแชตนัดคนเก็บได้เลย ตอบผิดได้ไม่เกิน 3 ครั้ง</p></div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+</html>

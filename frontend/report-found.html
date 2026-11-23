@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เจอของคนอื่น - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap">
+    <h1>เก็บของได้ ใจดีมาก</h1>
+    <p class="muted">โพสต์ไว้ตรงนี้ เจ้าของจะเห็นแค่รูปเบลอกับข้อมูลคร่าว ๆ จนกว่าจะตอบคำถามลับที่เธอตั้งได้ถูก</p>
+
+    <form id="found-form" class="grid grid-2 mt align-start" novalidate>
+      <section class="panel">
+        <h2>เจออะไร ที่ไหน</h2>
+        <div class="field">
+          <label for="title">ชื่อของ <span class="req">*</span></label>
+          <input type="text" id="title" name="title" maxlength="120" placeholder="เช่น กระเป๋าสตางค์หนังสีน้ำตาล" required>
+        </div>
+        <div class="field">
+          <span class="label">หมวด <span class="req">*</span></span>
+          <div class="chips" id="category-chips" role="radiogroup" aria-label="หมวด"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="field">
+            <label for="locationId">เจอที่ <span class="req">*</span></label>
+            <select id="locationId" name="locationId" required></select>
+          </div>
+          <div class="field">
+            <label for="foundAt">เจอตอนไหน <span class="req">*</span></label>
+            <input type="datetime-local" id="foundAt" name="foundAt" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="publicDescription">คำอธิบายที่ทุกคนเห็นได้</label>
+          <textarea id="publicDescription" name="publicDescription" maxlength="1000" placeholder="เช่น วางลืมไว้บนโต๊ะอ่านหนังสือชั้น 3"></textarea>
+          <div class="hint">อย่าบอกของข้างใน สีเฉพาะ หรือชื่อเจ้าของ เพราะจะทำให้คนอื่นมาสวมรอยได้ง่าย</div>
+        </div>
+        <div class="field">
+          <span class="label">รูป (.jpg .png .webp ไม่เกิน 5MB)</span>
+          <label class="upload-box" for="image">
+            <span id="upload-text"><svg class="i i-lg" aria-hidden="true"><use href="/assets/icons.svg#camera"></use></svg><br>แตะเพื่อเลือกรูป<br>
+              <span class="small muted">ระบบลบพิกัด GPS ในรูปให้อัตโนมัติ และโชว์แบบเบลอในหน้าสาธารณะ</span></span>
+            <img id="preview" class="hidden" alt="ตัวอย่างรูป">
+          </label>
+          <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp" class="hidden">
+        </div>
+        <div class="field">
+          <label for="meetingPoint">จุดนัดคืนของใน DPU <span class="req">*</span></label>
+          <input type="text" id="meetingPoint" name="meetingPoint" maxlength="200" placeholder="เช่น เคาน์เตอร์ยืม-คืน หอสมุด ชั้น 1" required>
+          <div class="hint">บอกเฉพาะคนที่ยืนยันผ่านแล้ว</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>คำถามที่เจ้าของตัวจริงตอบได้</h2>
+        <div class="field">
+          <label for="secretDetail">จุดสังเกตลับ <span class="req">*</span></label>
+          <textarea id="secretDetail" name="secretDetail" maxlength="1000" placeholder="เช่น มีบัตรนักศึกษา บัตร ATM กสิกร สติกเกอร์แมว ซับในสีเขียว" required></textarea>
+          <div class="hint"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>เข้ารหัสไว้ เห็นแค่เธอกับแอดมิน</div>
+        </div>
+
+        <div class="row between"><h3>คำถาม 2-3 ข้อ</h3>
+          <button type="button" class="btn btn-sm" id="add-q"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#plus"></use></svg>เพิ่มคำถาม</button></div>
+        <p class="small muted">ระบบเตรียมคำถามกับตัวเลือกให้ตามหมวดแล้ว แค่แตะตัวเลือกที่ตรงกับของจริง แก้คำถามหรือเพิ่มตัวเลือกเองก็ได้</p>
+        <div id="questions"></div>
+        <div id="guess-meter" class="guess-meter" aria-live="polite"></div>
+
+        <label class="check"><input type="checkbox" id="autoApprove" checked>
+          <span>ตอบถูกครบทุกข้อแล้วปลดล็อกให้อัตโนมัติ (ถ้าไม่เลือก เธอต้องกดอนุมัติเองทุกครั้ง)</span></label>
+        <div class="note info mt"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#shield"></use></svg>
+          <div class="small">คนที่ขอรับตอบผิดได้ไม่เกิน 3 ครั้ง ถ้าผิดครบ ระบบล็อกและแจ้งแอดมินทันที</div></div>
+        <div class="note danger hidden mt" id="error" role="alert"></div>
+        <button class="btn btn-grape btn-block btn-lg mt" type="submit" id="submit">โพสต์ของที่เจอ</button>
+      </section>
+    </form>
+    <div id="done" class="mt"></div>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/report-found.js"></script>
+</body>
+</html>

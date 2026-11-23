@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ของฉัน - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap">
+    <div class="row between">
+      <div><h1 id="hello">หวัดดี</h1><p class="muted" id="profile"></p></div>
+      <button class="btn btn-sm mobile-only" id="logout-mobile" type="button"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#logout"></use></svg>ออกจากระบบ</button>
+    </div>
+
+    <div id="nudge" class="mt"></div>
+
+    <section class="grid grid-4 mt" aria-label="สรุปของฉัน">
+      <div class="stat"><div class="value" id="s-lost">-</div><div class="label">ของที่ตามหาอยู่</div></div>
+      <div class="stat butter"><div class="value" id="s-match">-</div><div class="label">ใบที่รอให้ปัด</div></div>
+      <div class="stat"><div class="value" id="s-found">-</div><div class="label">ของที่เธอเก็บได้</div></div>
+      <div class="stat lilac"><div class="value" id="s-review">-</div><div class="label">คำตอบรอเธอตรวจ</div></div>
+    </section>
+
+    <div class="seg mt-lg" role="tablist" aria-label="หมวดของฉัน">
+      <button type="button" class="active" data-tab="lost" role="tab">ของที่หาย</button>
+      <button type="button" data-tab="found" role="tab">ของที่เก็บได้</button>
+      <button type="button" data-tab="review" role="tab">ตรวจคำตอบ <span class="count hidden" id="review-count"></span></button>
+      <button type="button" data-tab="claims" role="tab">คำขอของฉัน</button>
+    </div>
+
+    <section class="mt" data-panel="lost"><div id="lost-list" class="stack"><div class="spinner"></div></div></section>
+    <section class="mt hidden" data-panel="found"><div id="found-list" class="grid grid-tiles"></div></section>
+    <section class="mt hidden" data-panel="review"><div id="review-list" class="stack"></div></section>
+    <section class="mt hidden" data-panel="claims"><div class="panel table-wrap" id="claim-list"></div></section>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

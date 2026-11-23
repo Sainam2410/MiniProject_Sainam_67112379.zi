@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เข้าสู่ระบบ - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap">
+    <div class="auth">
+      <div class="auth-side">
+        <h2>กลับมาแล้ว<br>มาดูว่ามีอะไรแมตช์บ้าง</h2>
+        <p class="big">เข้าด้วยอีเมลมหาลัยเหมือนเดิม ถ้าระหว่างที่ไม่อยู่มีคนแจ้งเจอของที่คล้ายของเธอ จะมีแจ้งเตือนรออยู่</p>
+        <span class="sticker">ใช้อีเมล @dpu.ac.th เท่านั้น</span>
+      </div>
+      <div class="auth-form">
+        <h1>เข้าสู่ระบบ</h1>
+        <form id="login-form" novalidate class="mt">
+          <div class="field">
+            <label for="email">อีเมล DPU</label>
+            <input type="email" id="email" name="email" autocomplete="username" placeholder="ชื่อ@dpu.ac.th" required maxlength="120">
+          </div>
+          <div class="field">
+            <label for="password">รหัสผ่าน</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required maxlength="72">
+          </div>
+          <div class="note danger hidden" id="error" role="alert"></div>
+          <button class="btn btn-grape btn-block btn-lg mt" type="submit" id="submit">เข้าสู่ระบบ</button>
+        </form>
+        <p class="center mt small">ยังไม่มีบัญชี <a href="/register.html">สมัครเลย</a></p>
+        <p class="hint"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>ใส่รหัสผิด 5 ครั้งติดกัน บัญชีจะล็อก 15 นาที</p>
+      </div>
+    </div>
+  </main>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

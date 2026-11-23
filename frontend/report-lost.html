@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แจ้งของหาย - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap narrow">
+    <h1>ของหายใช่ไหม ใจเย็นก่อน</h1>
+    <p class="muted">บอกเท่าที่จำได้ ระบบจะเทียบกับของที่มีคนเก็บได้ให้ทันที แล้วพาไปปัดดูทีละใบ</p>
+
+    <form id="lost-form" class="panel mt" novalidate>
+      <div class="field">
+        <label for="title">หายอะไร <span class="req">*</span></label>
+        <input type="text" id="title" name="title" maxlength="120" placeholder="เช่น กระเป๋าเงินหนังสีน้ำตาล" required>
+      </div>
+      <div class="field">
+        <span class="label">หมวด <span class="req">*</span></span>
+        <div class="chips" id="category-chips" role="radiogroup" aria-label="หมวด"></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="field">
+          <label for="locationId">น่าจะหายแถวไหน <span class="req">*</span></label>
+          <select id="locationId" name="locationId" required></select>
+        </div>
+        <div class="field">
+          <label for="lostAt">ประมาณกี่โมง <span class="req">*</span></label>
+          <input type="datetime-local" id="lostAt" name="lostAt" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="description">เล่าเพิ่มอีกนิด</label>
+        <textarea id="description" name="description" maxlength="1000" placeholder="เช่น ลืมไว้บนโต๊ะอ่านหนังสือชั้น 3 ช่วงบ่าย"></textarea>
+        <div class="hint">ช่องนี้ใช้ช่วยจับคู่ อย่าใส่จุดสังเกตลับ เก็บไว้ตอบคำถามตอนยืนยัน</div>
+      </div>
+      <div class="field">
+        <label for="privateNote">โน้ตส่วนตัว (เห็นแค่เธอ)</label>
+        <textarea id="privateNote" name="privateNote" maxlength="500" placeholder="เช่น ข้างในมีบัตรนักศึกษา บัตร ATM ซับในสีเขียว"></textarea>
+        <div class="hint"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#lock"></use></svg>เข้ารหัสเก็บไว้ ไว้ช่วยจำตอนต้องตอบคำถามลับ</div>
+      </div>
+      <div class="note danger hidden" id="error" role="alert"></div>
+      <button class="btn btn-grape btn-block btn-lg mt" type="submit" id="submit">แจ้งหายแล้วหาให้เลย</button>
+    </form>
+
+    <div id="result" class="stack mt"></div>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/report-lost.js"></script>
+</body>
+</html>

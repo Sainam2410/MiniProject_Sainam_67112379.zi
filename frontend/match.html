@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ปัดหาของ - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap">
+    <div class="deck-page">
+      <aside>
+        <h1>ปัดหาของ</h1>
+        <p class="muted">ระบบคัดของที่มีคนเก็บได้มาให้ตามของที่เธอแจ้งหาย ใช่ก็ปัดขวา ไม่ใช่ก็ปัดซ้าย</p>
+        <h2 class="small muted mt" id="picker-title">ของที่เธอกำลังตามหา</h2>
+        <div class="lost-list" id="picker"></div>
+        <a class="btn btn-sm mt" href="/report-lost.html"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#plus"></use></svg>แจ้งของหายเพิ่ม</a>
+      </aside>
+
+      <section class="deck-zone" aria-label="การ์ดของที่อาจเป็นของเธอ">
+        <div class="deck" id="deck"><div class="spinner"></div></div>
+        <div class="deck-controls" id="controls">
+          <button class="round sm" id="btn-undo" type="button" aria-label="ย้อนการ์ดที่เพิ่งข้าม" title="ย้อนกลับ" disabled>
+            <svg class="i" aria-hidden="true"><use href="/assets/icons.svg#undo"></use></svg></button>
+          <button class="round no" id="btn-no" type="button" aria-label="ไม่ใช่ของฉัน" title="ไม่ใช่ (←)">
+            <svg class="i" aria-hidden="true"><use href="/assets/icons.svg#x"></use></svg></button>
+          <button class="round yes" id="btn-yes" type="button" aria-label="ใช่ของฉัน ไปยืนยัน" title="ใช่ของฉัน (→)">
+            <svg class="i" aria-hidden="true"><use href="/assets/icons.svg#heart"></use></svg></button>
+          <button class="round sm" id="btn-info" type="button" aria-label="ดูรายละเอียด" title="ดูรายละเอียด">
+            <svg class="i" aria-hidden="true"><use href="/assets/icons.svg#info"></use></svg></button>
+        </div>
+        <p class="deck-hint" id="deck-hint">ใช้ปุ่มลูกศรซ้าย/ขวาบนคีย์บอร์ดก็ได้</p>
+      </section>
+    </div>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/match.js"></script>
+</body>
+</html>

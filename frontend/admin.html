@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ผู้ดูแลระบบ - UniFind DPU</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main class="wrap">
+    <div class="row between">
+      <div><h1>หลังบ้านแอดมิน</h1><p class="muted">ตัวเลขทั้งหมดดึงจากฐานข้อมูลจริง</p></div>
+      <button class="btn btn-sm" id="refresh" type="button"><svg class="i" aria-hidden="true"><use href="/assets/icons.svg#refresh"></use></svg>รีเฟรช</button>
+    </div>
+
+    <section class="grid grid-4 mt" aria-label="สถิติหลัก">
+      <div class="stat "><div class="value" id="t-lost">-</div><div class="label">ของหายทั้งหมด</div></div>
+      <div class="stat "><div class="value" id="t-found">-</div><div class="label">ของที่เจอทั้งหมด</div></div>
+      <div class="stat mint"><div class="value" id="t-success">-</div><div class="label">ยืนยันเจ้าของสำเร็จ</div></div>
+      <div class="stat butter"><div class="value" id="t-pending">-</div><div class="label">คำตอบรอตรวจ</div></div>
+      <div class="stat "><div class="value" id="t-match">-</div><div class="label">คู่ที่ระบบจับได้</div></div>
+      <div class="stat mint"><div class="value" id="t-returned">-</div><div class="label">คืนเจ้าของแล้ว</div></div>
+      <div class="stat rose"><div class="value" id="t-locked">-</div><div class="label">คำขอที่ถูกล็อก</div></div>
+      <div class="stat lilac"><div class="value" id="t-users">-</div><div class="label">ผู้ใช้ที่ใช้งานอยู่</div></div>
+    </section>
+
+    <div class="seg mt-lg" role="tablist" aria-label="เมนูแอดมิน">
+      <button type="button" class="active" data-tab="overview">ภาพรวม</button>
+      <button type="button" data-tab="claims">คำขอ <span class="count hidden" id="claims-count"></span></button>
+      <button type="button" data-tab="items">สิ่งของ</button>
+      <button type="button" data-tab="users">ผู้ใช้</button>
+      <button type="button" data-tab="audit">บันทึกความปลอดภัย</button>
+    </div>
+
+    <!-- ภาพรวม -->
+    <section class="mt" data-panel="overview">
+      <div class="grid grid-2">
+        <div class="panel">
+          <h3>แจ้งหายกับแจ้งเจอ แยกตามหมวด</h3>
+          <div class="legend"><span class="lost"><i></i>แจ้งหาย</span><span class="found"><i></i>แจ้งเจอ</span></div>
+          <div class="bars" id="chart-category"></div>
+        </div>
+        <div class="panel">
+          <h3>รายการใหม่ 7 วันล่าสุด</h3>
+          <div class="legend"><span class="lost"><i></i>แจ้งหาย</span><span class="found"><i></i>แจ้งเจอ</span></div>
+          <div class="cols" id="chart-daily"></div>
+          <div class="cols-labels" id="chart-daily-labels"></div>
+        </div>
+      </div>
+      <div class="panel mt">
+        <h3>จุดไหนใน DPU ของหายบ่อย</h3>
+        <div class="legend"><span class="lost"><i></i>แจ้งหาย</span><span class="found"><i></i>แจ้งเจอ</span></div>
+        <div class="bars" id="chart-location"></div>
+        <details class="mt"><summary class="small">ดูข้อมูลแบบตาราง</summary><div class="table-wrap" id="location-table"></div></details>
+      </div>
+    </section>
+
+    <!-- คำขอ -->
+    <section class="mt hidden" data-panel="claims">
+      <div class="panel">
+        <div class="row between"><h3>คำขอยืนยันความเป็นเจ้าของ</h3>
+          <select id="claim-status" aria-label="กรองสถานะคำขอ" class="w-auto">
+            <option value="locked">ถูกล็อก (ตอบผิดครบ 3 ครั้ง)</option>
+            <option value="pending_review">รอตรวจคำตอบ</option>
+            <option value="approved">ผ่านแล้ว รอรับของ</option>
+            <option value="completed">รับของแล้ว</option>
+            <option value="in_progress">กำลังยืนยัน</option>
+          </select></div>
+        <div id="claims-table" class="table-wrap mt"></div>
+      </div>
+      <div id="review-box" class="stack mt"></div>
+    </section>
+
+    <!-- สิ่งของ -->
+    <section class="mt hidden" data-panel="items">
+      <div class="panel">
+        <form class="row" id="items-form">
+          <select id="items-type" aria-label="ประเภท"><option value="found">ของที่เจอ</option><option value="lost">ของหาย</option></select>
+          <select id="items-status" aria-label="สถานะ"></select>
+          <input type="search" id="items-q" placeholder="ค้นหาชื่อสิ่งของ" maxlength="60" aria-label="ค้นหา">
+          <button class="btn btn-ink btn-sm" type="submit">ค้นหา</button>
+        </form>
+        <div id="items-table" class="table-wrap mt"></div>
+      </div>
+    </section>
+
+    <!-- ผู้ใช้ -->
+    <section class="mt hidden" data-panel="users">
+      <div class="panel">
+        <form class="row" id="users-form">
+          <input type="search" id="users-q" placeholder="ค้นหาอีเมล รหัสนักศึกษา หรือชื่อ" maxlength="60" aria-label="ค้นหาผู้ใช้">
+          <button class="btn btn-ink btn-sm" type="submit">ค้นหา</button>
+        </form>
+        <p class="small muted mt">เบอร์โทรแสดงแบบปิดบางส่วน แอดมินเห็นแค่เท่าที่จำเป็น</p>
+        <div id="users-table" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- Audit -->
+    <section class="mt hidden" data-panel="audit">
+      <div class="panel">
+        <form class="row" id="audit-form">
+          <select id="audit-action" aria-label="กรองประเภทเหตุการณ์">
+            <option value="">ทุกเหตุการณ์</option>
+            <option>LOGIN_FAILED</option><option>LOGIN_SUCCESS</option><option>ACCOUNT_LOCKED</option>
+            <option>CLAIM_FAILED</option><option>CLAIM_LOCKED</option><option>CLAIM_AUTO_APPROVED</option>
+            <option>CLAIM_APPROVED</option><option>CLAIM_REJECTED</option><option>CLAIM_COMPLETED</option>
+            <option>IMAGE_ACCESS_DENIED</option><option>FOUND_CREATED</option><option>LOST_CREATED</option>
+            <option>ADMIN_CLAIM_UNLOCKED</option><option>ADMIN_USER_UPDATED</option><option>ADMIN_ITEM_DELETED</option>
+          </select>
+          <button class="btn btn-ink btn-sm" type="submit">กรอง</button>
+        </form>
+        <div id="audit-table" class="table-wrap mt"></div>
+      </div>
+    </section>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-root" aria-live="polite"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
